@@ -1,12 +1,13 @@
 import { model, Schema } from 'mongoose';
-import { IUser } from './user.interface';
 import bcrypt from 'bcrypt';
-import config from '../config';
+import config from '../../config';
+import { IUser } from './user.interface';
+
 const userResgistrationSchema = new Schema<IUser>(
   {
     name: { type: String, required: true },
     email: { type: String, required: true },
-    password: { type: String, required: true },
+    password: { type: String, required: true, select: false },
     role: {
       type: String,
       default: 'user',
