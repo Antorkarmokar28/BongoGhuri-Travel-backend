@@ -2,6 +2,8 @@ import { StatusCodes } from 'http-status-codes';
 import { IUser } from './user.interface';
 import { User } from './user.model';
 import AppError from '../../error/appError';
+import { userSearchableFields } from './user.constant';
+import QueryBuilder from '../../builders/QueryBuilder';
 // create user into db
 const userRegistrationIntoDB = async (payload: IUser) => {
   const isUserExists = await User.findOne({ email: payload.email });
@@ -26,8 +28,14 @@ const updateUserIntoDB = async (id: string, payload: Partial<IUser>) => {
   return result;
 };
 //get all user from db
-const getAllUserFromDB = async () => {
-  const result = await User.find();
+const getAllUserFromDB = async (query: Record<string, unknown>) => {
+  const userQuery = new QueryBuilder(User.find(), query)
+    .search(userSearchableFields)
+    .filter()
+    .sort()
+    .paginate()
+    .fields();
+  const result = await userQuery.modelQuery;
   return result;
 };
 // get single user from db

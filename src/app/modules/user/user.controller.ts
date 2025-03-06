@@ -25,7 +25,8 @@ const updateUser = catchAsync(async (req, res) => {
 });
 
 const getAllUser = catchAsync(async (req, res) => {
-  const result = await UserRegistrationService.getAllUserFromDB();
+  const query = req.query;
+  const result = await UserRegistrationService.getAllUserFromDB(query);
   sendResponse(res, {
     success: true,
     statusCode: StatusCodes.OK,
