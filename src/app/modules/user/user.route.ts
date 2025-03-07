@@ -6,7 +6,7 @@ import validationRequest from '../../middlewares/validationRequest';
 const router = Router();
 router.post(
   '/register',
-  // validationRequest(UserValidation.userRegistrationSchema),
+  validationRequest(UserValidation.userRegistrationSchema),
   UserController.userRegistration
 );
 //update spesific user route
